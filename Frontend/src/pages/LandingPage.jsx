@@ -20,6 +20,8 @@ import {
 
 import '../App.css';
 import { Footer } from './Footer';
+import pic from '../../images/logo_transparent.png'
+import picture from '../../images/school2.jpg'
 
 export const LandingPage = () => {
   const [barVisible, setBarVisible] = useState(false);
@@ -81,7 +83,7 @@ export const LandingPage = () => {
     <>
       <div id="head_part">
         <div className='logo'>
-          <img src="../../images/logo_transparent.png" alt="logo" />
+          <img src={pic} alt="logo" />
         </div>
         <div className='Cont'>
           <span className="welcome-message">"Welcome! Empowering Students, Shaping Futures"</span>
@@ -92,7 +94,7 @@ export const LandingPage = () => {
       </div>
       <div>
         <div className='school'>
-          <img src="../../images/school2.jpg" alt="fund_img" />
+          <img src={picture} alt="fund_img" />
         </div>
       </div>
       <div id="bar" className={barVisible ? 'visible' : ''}>
