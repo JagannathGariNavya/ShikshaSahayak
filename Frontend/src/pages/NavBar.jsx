@@ -61,7 +61,7 @@ export function NavBar() {
     >
       <Flex h={20} alignItems="center" justifyContent="space-between">
         <Box display="flex" alignItems="center">
-          <Image src={logo} alt="Logo" h="80px" mr={4} />
+          <Image src={logo} alt="Logo" height="80px" mr={4} />
         </Box>
         <Box display={{ base: 'none', lg: 'flex' }} alignItems="center" flexWrap="wrap" flexGrow={1} justifyContent="space-around">
           <Menu>
