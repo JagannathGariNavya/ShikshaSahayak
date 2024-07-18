@@ -1,11 +1,10 @@
 const {Schema, model} = require("mongoose");
-
+require("dotenv").config();
 const student_schema = new Schema({
     student_name:{type:String, require:true},
     student_email:{type:String, require:true},
     student_password:{type:String, require:true},
     student_age:{type:Number, require:true},
-    role:{type:String,enum:["user", "admin"], default:"user"},
     donation_title:{type:String},
     donation_description:{type:String},
     updates_on_donation:{type:[String]},
@@ -20,5 +19,5 @@ const student_schema = new Schema({
     comments:{type:[Object]}
 });
 
-const userModel = model("user", userSchema);
-module.exports = userModel;
+const studentModel = model(process.env.student_collection, student_schema);
+module.exports = studentModel;
