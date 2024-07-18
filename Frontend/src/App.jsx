@@ -1,6 +1,11 @@
 
 import './App.css'
-import { LandingPage } from './pages/LandingPage'
+import { Footer } from './pages/Footer'
+import { HomePage } from './pages/HomePage'
+import { NavBar } from './pages/NavBar'
+
+
+// import { LandingPage } from './pages/LandingPage'
 
 
 function App() {
@@ -8,8 +13,10 @@ function App() {
 
   return (
     <>
-     <LandingPage/>
-  
+    <NavBar/>
+    <HomePage/>
+  <Footer/>
+  {/* <LandingPage/> */}
     </>
   )
 }

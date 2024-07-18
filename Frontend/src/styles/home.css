@@ -1,0 +1,62 @@
+#home {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100vh; /* Adjust height as needed */
+    overflow: hidden;
+  }
+  
+  #home img {
+    width: 100%;
+    height: auto;
+  }
+  
+  #home h1 {
+    position: absolute;
+    left: 20px; /* Adjust to move text horizontally */
+    color: #f38830;
+    font-family: Arial, sans-serif;
+    font-size: 3rem; /* Adjust font size as needed */
+    padding: 10px; /* Optional: Adjust padding as needed */
+    border-radius: 5px; /* Optional: Adds rounded corners */
+    animation: slideIn 10s ease-in-out infinite;
+    transition: all 0.5s ease;
+  }
+  
+  
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    30% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    70% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    #home h1 {
+      font-size: 2rem; /* Adjust font size for smaller screens */
+      left: 10px; /* Adjust padding for smaller screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    #home h1 {
+      font-size: 1.5rem; /* Adjust font size for smaller screens */
+      left: 5px; /* Adjust padding for smaller screens */
+    }
+  }
+  
