@@ -102,7 +102,7 @@ export function NavBar() {
               <MenuItem as={Link} href="#aboutInfo">Support</MenuItem>
               <MenuItem as={Link} href="#aboutInfo">Help</MenuItem>
               <MenuItem as={Link} href="#aboutInfo">FAQ's</MenuItem>
-              <MenuItem as={Link} href="#aboutInfo">Contact Info</MenuItem>
+              <MenuItem as={Link} href="/contact">Contact Info</MenuItem>
             </MenuList>
           </Menu>
         </Box>

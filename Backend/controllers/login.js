@@ -1,9 +1,7 @@
-
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import Customer from '../models/Loginmodel.js';
-// import Customer from '../models/Customer.js';
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -16,14 +14,14 @@ const generateRefreshToken = (id) => {
 export const register = async (req, res) => {
     console.log("hi am register")
     try {
-        const { name, email, password } = req.body;
+        const { student_name, student_email, student_password } = req.body;
         console.log(req.body);
-        if (!name || !email || !password) {
+        if (!student_name || !student_email || !student_password) {
             return res.status(400).send('Invalid request data');
         }
-        const userExist = await Customer.findOne({ email });
+        const userExist = await Customer.findOne({ student_email });
         if (!userExist) {
-            const data = new Customer({ name, email, password });
+            const data = new Customer({ student_name, student_email, student_password });
             await data.save();
             res.status(201).json({ msg: "Register successful", data });
         } else {
@@ -47,13 +45,13 @@ export const allUsers = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const { email, password } = req.body;
-        if (!email || !password) {
+        const { student_email, student_password } = req.body;
+        if (!student_email || !student_password) {
             return res.status(400).send("Email and password required");
         }
-        const userExist = await Customer.findOne({ email });
+        const userExist = await Customer.findOne({ student_email });
         if (userExist) {
-            const passCheck = await bcrypt.compare(password, userExist.password);
+            const passCheck = await bcrypt.compare(student_password, userExist.student_password);
             if (passCheck) {
                 const accessToken = generateToken(userExist._id);
                 const refreshToken = generateRefreshToken(userExist._id);
