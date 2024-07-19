@@ -25,6 +25,7 @@ import {
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, SearchIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { FaUser } from 'react-icons/fa';
+import { Link as RouterLink } from 'react-router-dom';
 import logo from '../../images/logo.png';
 
 export function NavBar() {
@@ -32,6 +33,7 @@ export function NavBar() {
   const [isDonateOpen, setDonateOpen] = useState(false);
   const [isFundraiserOpen, setFundraiserOpen] = useState(false);
   const [isAboutOpen, setAboutOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('accessToken'));
 
   const handleToggle = (menu) => {
     switch (menu) {
@@ -49,6 +51,13 @@ export function NavBar() {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    setIsLoggedIn(false);
+    window.location.href = '/';
+  };
+
   return (
     <Box
       position="fixed"
@@ -61,7 +70,7 @@ export function NavBar() {
     >
       <Flex h={20} alignItems="center" justifyContent="space-between">
         <Box display="flex" alignItems="center">
-          <Image src={logo} alt="Logo" height="80px" mr={4} />
+          <RouterLink to='/home'><Image src={logo} alt="Logo" height="80px" mr={4} /></RouterLink>
         </Box>
         <Box display={{ base: 'none', lg: 'flex' }} alignItems="center" flexWrap="wrap" flexGrow={1} justifyContent="space-around">
           <Menu>
@@ -109,8 +118,14 @@ export function NavBar() {
             <Menu>
               <MenuButton as={IconButton} icon={<FaUser />} variant="outline" fontSize="lg" />
               <MenuList>
-                <MenuItem as={Link} href="#login">Login</MenuItem>
-                <MenuItem as={Link} href="#register">Register</MenuItem>
+                {!isLoggedIn ? (
+                  <>
+                    <MenuItem as={RouterLink} to="/login">Login</MenuItem>
+                    <MenuItem as={RouterLink} to="/signup">Register</MenuItem>
+                  </>
+                ) : (
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                )}
               </MenuList>
             </Menu>
           </Box>
@@ -178,8 +193,14 @@ export function NavBar() {
                     <Input type="search" placeholder="Search" />
                   </InputGroup>
                   <Link href="#start" onClick={onClose}>Start a fundraiser</Link>
-                  <Link href="#login" onClick={onClose}>Login</Link>
-                  <Link href="#register" onClick={onClose}>Register</Link>
+                  {!isLoggedIn ? (
+                    <>
+                      <Link to="/login" onClick={onClose}>Login</Link>
+                      <Link to="/signup" onClick={onClose}>Register</Link>
+                    </>
+                  ) : (
+                    <Link onClick={() => { handleLogout(); onClose(); }}>Logout</Link>
+                  )}
                 </Stack>
               </DrawerBody>
             </DrawerContent>

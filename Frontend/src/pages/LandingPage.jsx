@@ -22,6 +22,7 @@ import '../App.css';
 import { Footer } from './Footer';
 import pic from '../../images/logo_transparent.png'
 import picture from '../../images/school2.jpg'
+import { Link } from 'react-router-dom';
 
 export const LandingPage = () => {
   const [barVisible, setBarVisible] = useState(false);
@@ -83,7 +84,7 @@ export const LandingPage = () => {
     <>
       <div id="head_part">
         <div className='logo'>
-          <img src={pic} alt="logo" />
+          <Link to='/home'><img src={pic} alt="logo" /></Link>
         </div>
         <div className='Cont'>
           <span className="welcome-message">"Welcome! Empowering Students, Shaping Futures"</span>
@@ -180,7 +181,7 @@ export const LandingPage = () => {
             </ModalFooter>
           </ModalContent>
         </Modal>
-        <Footer />
+        {/* <Footer /> */}
     </>
   );
 };
