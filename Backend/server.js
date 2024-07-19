@@ -5,7 +5,7 @@ import cors from 'cors';
 // import connectDB from './configs/db.js';
 import bodyParser from 'body-parser';
 import Otprouter from './routes/otprouter.js';
-import connectDB from './configs/db.js';
+import connectDB from './configs/Db.js';
 import loginrouter from './routes/Login.js';
 
 const app = express();
