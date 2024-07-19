@@ -4,15 +4,15 @@ import { Box, Button, FormControl, FormLabel, Input, Text, VStack } from '@chakr
 import { Link } from 'react-router-dom';
 
 const LoginForm = ({ setIsLoggedIn }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [student_email, setEmail] = useState('');
+  const [student_password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/login', { email, password });
+      const response = await axios.post('/login', { student_email, student_password });
       const { accessToken, refreshToken } = response.data;
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
@@ -20,7 +20,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
       setIsLoggedIn(true);
       setSuccessMessage('Successfully logged in!');
       setTimeout(() => {
-        window.location.href = '/login'; // Redirect to home page after login
+        window.location.href = '/home'; // Redirect to home page after login
       }, 2000); // Show the success message for 2 seconds
     } catch (err) {
       setError('Login failed. Please check your credentials.');
@@ -42,7 +42,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
                 <Input
                   type="email"
                   placeholder="Email"
-                  value={email}
+                  value={student_email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
@@ -52,7 +52,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
                 <Input
                   type="password"
                   placeholder="Password"
-                  value={password}
+                  value={student_password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />

@@ -2,16 +2,16 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const customerSchema = new mongoose.Schema({
-    name: {
+    student_name: {
         type: String,
         required: true,
     },
-    email: {
+    student_email: {
         type: String,
         required: true,
         unique: true,
     },
-    password: {
+    student_password: {
         type: String,
         required: true,
     },
@@ -23,18 +23,31 @@ const customerSchema = new mongoose.Schema({
         type: String,
         default: "student",
         enum:["student","admin","donor"],
-    }
+    },
+    student_age: { type: Number },
+    donation_title: { type: String },
+    donation_description: { type: String },
+    updates_on_donation: { type: [String] },
+    media_images: { type: [String] },
+    time_of_creation: { type: Date },
+    donation_deadline: { type: Date },
+    total_amount_gathered: { type: Number },
+    goal_amount: { type: Number },
+    current_amount: { type: Number },
+    donation_active_status: { type: Boolean },
+    current_donators: { type: [Object] },
+    comments: { type: [Object] }
 });
 
 customerSchema.pre('save', async function (next) {
-    if (this.isModified('password') || this.isNew) {
-        this.password = await bcrypt.hash(this.password, 10);
+    if (this.isModified('student_password') || this.isNew) {
+        this.student_password = await bcrypt.hash(this.student_password, 10);
     }
     next();
 });
 
 customerSchema.methods.comparePassword = function (candidatePassword) {
-    return bcrypt.compare(candidatePassword, this.password);
+    return bcrypt.compare(candidatePassword, this.student_password);
 };
 
 const Customer = mongoose.model('Customer', customerSchema);

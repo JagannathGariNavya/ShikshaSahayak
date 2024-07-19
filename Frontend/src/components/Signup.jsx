@@ -4,16 +4,16 @@ import { FormControl, FormLabel, Box, Button, Input, Text, VStack } from '@chakr
 import { Link } from 'react-router-dom';
 
 const RegisterForm = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [student_name, setName] = useState('');
+  const [student_email, setEmail] = useState('');
+  const [student_password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/register', { name, email, password });
+      const response = await axios.post('/register', { student_name, student_email, student_password });
       console.log(response);
       setSuccess('Registration successful! You can now log in.');
       setName('');
@@ -38,7 +38,7 @@ const RegisterForm = () => {
             <Input
               type="text"
               placeholder="Enter your name"
-              value={name}
+              value={student_name}
               onChange={(e) => setName(e.target.value)}
               required
             />
@@ -49,7 +49,7 @@ const RegisterForm = () => {
             <Input
               type="email"
               placeholder="Enter your email"
-              value={email}
+              value={student_email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -60,7 +60,7 @@ const RegisterForm = () => {
             <Input
               type="password"
               placeholder="Enter your password"
-              value={password}
+              value={student_password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
