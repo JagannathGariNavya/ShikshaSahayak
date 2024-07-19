@@ -27,7 +27,9 @@ const RegisterForm = () => {
   };
 
   return (
-    <Box maxW="sm" mx="auto" mt="10" p="6" boxShadow="md" borderRadius="md" bg="white">
+    <>
+
+    <Box maxW="sm" mx="auto" p="6" boxShadow="md" borderRadius="md" bg="white">
       <Text fontSize="2xl" textAlign="center">Register</Text>
       <form onSubmit={handleSubmit}>
         <VStack spacing={4} align="stretch">
@@ -73,11 +75,12 @@ const RegisterForm = () => {
       
       <Text mt="4" textAlign="center">
         Already have an account?{' '}
-        <Text as={Link} to="/" color="blue.500" fontWeight="bold" textDecoration="underline">
+        <Text as={Link} to="/login" color="blue.500" fontWeight="bold" textDecoration="underline">
           Login
         </Text>
       </Text>
     </Box>
+              </>
   );
 };
 

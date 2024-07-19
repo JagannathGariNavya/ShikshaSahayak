@@ -20,7 +20,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
       setIsLoggedIn(true);
       setSuccessMessage('Successfully logged in!');
       setTimeout(() => {
-        window.location.href = '/'; // Redirect to home page after login
+        window.location.href = '/login'; // Redirect to home page after login
       }, 2000); // Show the success message for 2 seconds
     } catch (err) {
       setError('Login failed. Please check your credentials.');
@@ -29,7 +29,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
   };
 
   return (
-    <Box maxW="sm" mx="auto" mt="10" p="6" boxShadow="md" borderRadius="md" bg="white">
+    <Box maxW="sm" mx="auto"mb='10' p="6" boxShadow="md" borderRadius="md" bg="white">
       {successMessage ? (
         <Text fontSize="2xl" color="green.500">{successMessage}</Text>
       ) : (
