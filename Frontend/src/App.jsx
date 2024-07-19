@@ -1,24 +1,27 @@
+// App.jsx
+import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import LoginForm from './components/Loginpage';
+import RegisterForm from './components/Signup';
+import ForgotPassword from './components/forgotpassword';
+import ChangePassword from './components/ChangePassword';
+import Home from './components/Home';
 
-import './App.css'
-import { Footer } from './pages/Footer'
-import { HomePage } from './pages/HomePage'
-import { NavBar } from './pages/NavBar'
-
-
-// import { LandingPage } from './pages/LandingPage'
-
-
-function App() {
-
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('accessToken'));
 
   return (
-    <>
-    <NavBar/>
-    <HomePage/>
-  <Footer/>
-  {/* <LandingPage/> */}
-    </>
-  )
-}
+    <div>
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Routes>
+        <Route path="/" element={isLoggedIn ? <Home /> : <LoginForm setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/signup" element={<RegisterForm />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/change-password" element={<ChangePassword />} />
+      </Routes>
+    </div>
+  );
+};
 
-export default App
+export default App;

@@ -1,22 +1,34 @@
-const express = require("express");
+import express from 'express';
+import {} from 'dotenv/config';
+import cors from 'cors';
+// import loginrouter from './routes/Login.js';
+// import connectDB from './configs/db.js';
+import bodyParser from 'body-parser';
+import Otprouter from './routes/otprouter.js';
+import connectDB from './configs/db.js';
+import loginrouter from './routes/Login.js';
+
 const app = express();
-require("dotenv").config();
-const connectDB = require("./configs/Db")
-const port =process.env.PORT;
-const projectRoutes = require("./routes/projectRoutes")
+app.use(cors());
 app.use(express.json());
-app.use("/projects",projectRoutes)
-app.get("/", (req, res) => {
-    console.log("this is home route");
-    res.send("Hello, this is the home route!"); // Send a response to the client
+app.use(bodyParser.json());
+
+app.use('/api', Otprouter);
+
+app.use('/api',loginrouter)
+app.use('/', (req, res) => {
+    res.send("this is home route ");
+
 });
 
-app.listen(port, async() => {
-    try{
-        await connectDB;
-        console.log("Server is running on http://localhost:"+port);
-    }
-    catch(err){
+const PORT = process.env.PORT || 3200;
+app.listen(PORT, async () => {
+    try {
+       
+        connectDB()
+        console.log('mongo connected');
+        console.log(`sever is runing at ${PORT}`);
+    } catch (err) {
         console.log(err);
     }
-});
+})
