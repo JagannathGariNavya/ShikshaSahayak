@@ -1,5 +1,5 @@
-const {Schema, model} = require("mongoose");
-require("dotenv").config();
+import { Schema, Model } from "mongoose";
+import {} from 'dotenv/config';
 const student_schema = new Schema({
     student_name:{type:String, require:true},
     student_email:{type:String, require:true},
