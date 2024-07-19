@@ -13,7 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
-app.use("projects",projectRoutes);
+app.use("/projects",projectRoutes);
 app.use('/api', Otprouter);
 
 app.use('/api',loginrouter)

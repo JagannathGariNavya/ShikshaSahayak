@@ -6,8 +6,8 @@ const projectRoutes = express.Router();
 projectRoutes.get("/", async(req,res)=>{
     try{
         // const data = await studentModel.find();
-        // const data = await Customer.aggregate([{$match:{...req.query}},{$project:{"student_password":0, "student_email":0}}]);
-        // res.json(data);
+        const data = await Customer.aggregate([{$match:{...req.query}},{$project:{"student_password":0, "student_email":0}}]);
+        res.json(data);
     }
     catch(err){
         console.log(err);
