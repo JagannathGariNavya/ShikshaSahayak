@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import 'dotenv/config';
-import Customer from '../models/Loginmodel.js';
+import Customer from '../Models/Loginmodel.js';
 import jwt from 'jsonwebtoken';
 
 // Temporary store for OTPs

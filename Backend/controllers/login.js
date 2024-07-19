@@ -1,7 +1,7 @@
-import express from 'express';
+// import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import Customer from '../models/Loginmodel.js';
+import Customer from '../Models/Loginmodel.js';
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' });
