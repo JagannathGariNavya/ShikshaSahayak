@@ -33,4 +33,4 @@ export const roleMiddleware = (role) => {
 };
 
 
-// export  {protect} ;
+export default protect;
