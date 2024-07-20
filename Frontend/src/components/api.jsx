@@ -12,7 +12,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api', // Adjust this based on your backend URL
+  baseURL: 'https://shikshasahayak.onrender.com/projects', // Adjust this based on your backend URL
 });
 
 // Interceptor to add the access token to every request

@@ -10,6 +10,8 @@ import { LandingPage } from './pages/LandingPage';
 import { Footer } from './pages/Footer';
 import { NavBar } from './pages/NavBar';
 import Contact from './components/Contact';
+import DetailedProject from './pages/DetailedProject';
+import Dashboard from './pages/Dashboard';
 // import Test from './test/test';
 
 const App = () => {
@@ -26,6 +28,8 @@ const App = () => {
         <Route path='/contact' element={<Contact/>}/>
         <Route path='/forgotpassword' element={<ForgotPassword />} />
         <Route path='/change-password' element={<ChangePassword />} />
+        <Route path='/detailedProject' element={<DetailedProject/>} />
+        <Route path='/dashboard' element={<Dashboard/> }/>
       </Routes>
       <Footer />
       {/* <Test/> */}
