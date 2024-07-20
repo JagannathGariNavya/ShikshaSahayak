@@ -1,56 +1,80 @@
-import React, { useState } from 'react';
-import { Box, Flex, VStack, Text, Button } from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react';
+import { Box, Flex, VStack, Text, Button, Image, Progress } from '@chakra-ui/react';
 import '../styles/home.css';
 import pic from '../../images/kids.jpg';
-import kids from '../../images/charity.jpg'
+import kids from '../../images/charity.jpg';
+import lg from '../../images/logo_transparent.png'
 
 export const HomePage = () => {
   const [selectedContent, setSelectedContent] = useState('EDUCATE');
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const content = {
     'START FREE FUNDING': (
       <VStack align="flex-start" spacing="2">
-       <Text>Your donations directly fund the education of underprivileged students.</Text>
-<Text>Every contribution helps provide essential resources like books, uniforms, and tuition fees.</Text>
-<Text>With your support, we can ensure that no child is deprived of education due to financial constraints.</Text>
-<Text>By funding education, you are not only helping individuals but also contributing to the betterment of society.</Text>
-<Text>Together, we can create a future where every child has the opportunity to learn and grow.</Text>
-<Text>Your generosity helps bridge the gap between potential and opportunity. Invest in education today to empower the leaders of tomorrow.</Text>
-
+        <Text>Your donations directly fund the education of underprivileged students.</Text>
+        <Text>Every contribution helps provide essential resources like books, uniforms, and tuition fees.</Text>
+        <Text>With your support, we can ensure that no child is deprived of education due to financial constraints.</Text>
+        <Text>By funding education, you are not only helping individuals but also contributing to the betterment of society.</Text>
+        <Text>Together, we can create a future where every child has the opportunity to learn and grow.</Text>
+        <Text>Your generosity helps bridge the gap between potential and opportunity. Invest in education today to empower the leaders of tomorrow.</Text>
       </VStack>
     ),
     'EDUCATE': (
-  <VStack align="flex-start" spacing="2">
-    <Text>Education is a powerful tool that can transform lives and uplift communities.</Text>
-    <Text>By contributing to our cause, you are helping to provide essential resources like books, uniforms, and tuition fees for underprivileged students.</Text>
-    <Text>Your support ensures that financial constraints do not hinder a child's opportunity to learn and grow.</Text>
-    <Text>Every donation helps create a brighter future for students who are the first in their families to pursue higher education.</Text>
-    <Text>We do not expect any monetary return; your generosity is the true reward as it brings hope and opportunity to those in need.</Text>
-    <Text>Together, we can make a significant impact and empower the next generation through education.</Text>
-  </VStack>
-),
-'ENHANCE': (
-  <VStack align="flex-start" spacing="2">
-    <Text>Enhancing the quality of education is vital for the overall development of students.</Text>
-    <Text>Your contributions help us improve school facilities and provide better learning environments.</Text>
-    <Text>We focus on providing additional resources like extracurricular activities, mentorship programs, and skill-building workshops.</Text>
-    <Text>Funds also support rural girls, helping them gain confidence and become self-sufficient.</Text>
-    <Text>With your help, we collaborate with junior colleges and schools to ensure students from poor backgrounds receive quality education.</Text>
-    <Text>Together, we can ensure that students not only pursue their education but also excel in it, leading to professional success.</Text>
-  </VStack>
-),
+      <VStack align="flex-start" spacing="2">
+        <Text>Education is a powerful tool that can transform lives and uplift communities.</Text>
+        <Text>By contributing to our cause, you are helping to provide essential resources like books, uniforms, and tuition fees for underprivileged students.</Text>
+        <Text>Your support ensures that financial constraints do not hinder a child's opportunity to learn and grow.</Text>
+        <Text>Every donation helps create a brighter future for students who are the first in their families to pursue higher education.</Text>
+        <Text>We do not expect any monetary return; your generosity is the true reward as it brings hope and opportunity to those in need.</Text>
+        <Text>Together, we can make a significant impact and empower the next generation through education.</Text>
+      </VStack>
+    ),
+    'ENHANCE': (
+      <VStack align="flex-start" spacing="2">
+        <Text>Enhancing the quality of education is vital for the overall development of students.</Text>
+        <Text>Your contributions help us improve school facilities and provide better learning environments.</Text>
+        <Text>We focus on providing additional resources like extracurricular activities, mentorship programs, and skill-building workshops.</Text>
+        <Text>Funds also support rural girls, helping them gain confidence and become self-sufficient.</Text>
+        <Text>With your help, we collaborate with junior colleges and schools to ensure students from poor backgrounds receive quality education.</Text>
+        <Text>Together, we can ensure that students not only pursue their education but also excel in it, leading to professional success.</Text>
+      </VStack>
+    ),
     'EMPLOYMENT': (
-  <VStack align="flex-start" spacing="2">
-    <Text>Today's students, supported by your donations, are tomorrow's employees and leaders.</Text>
-    <Text>By helping students raise funds, you enable them to pursue education and build successful careers.</Text>
-    <Text>Many of our beneficiaries are first-time graduates in their families, coming from villages and small towns.</Text>
-    <Text>Your contributions help educate rural girls, preventing early marriages and making them self-sufficient and employable.</Text>
-    <Text>With education, these students gain the skills and knowledge needed for professional success.</Text>
-    <Text>Join us in creating a future where every student, with the support of generous donors like you, becomes a valuable member of the workforce.</Text>
-  </VStack>
-)
-,
+      <VStack align="flex-start" spacing="2">
+        <Text>Today's students, supported by your donations, are tomorrow's employees and leaders.</Text>
+        <Text>By helping students raise funds, you enable them to pursue education and build successful careers.</Text>
+        <Text>Many of our beneficiaries are first-time graduates in their families, coming from villages and small towns.</Text>
+        <Text>Your contributions help educate rural girls, preventing early marriages and making them self-sufficient and employable.</Text>
+        <Text>With education, these students gain the skills and knowledge needed for professional success.</Text>
+        <Text>Join us in creating a future where every student, with the support of generous donors like you, becomes a valuable member of the workforce.</Text>
+      </VStack>
+    ),
   };
+
+  useEffect(() => {
+    fetch('https://shikshasahayak.onrender.com/projects')
+      .then(response => response.json())
+      .then(data => {
+        const activeDonations = data.filter(project => project.donation_active_status === true);
+        setData(activeDonations);
+        setLoading(false);
+      })
+      .catch(error => {
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div className="home-page">
@@ -87,12 +111,25 @@ export const HomePage = () => {
           </Box>
         </Flex>
       </Flex>
-
       <div id="char">
         <h3>"Investing in education is the most powerful way to create a brighter future. Your support can change a life, and through that life, change the world."</h3>
         <img src={kids} alt="kids"/>
       </div>
+      <div id="cards" className="cards">
+        {Array.isArray(data) && data.map((project) => (
+          <Box key={project._id} borderWidth="1px" borderRadius="lg" overflow="hidden" p="4" m='7' className="card" border="1px solid #9fc948">
+            <Image src={lg} alt="user logo" borderRadius="full" boxSize="50px" mt="4" />
+            <Text fontWeight="bold" fontSize="xl">{project.donation_title}</Text>
+            <Text mt="2">{project.donation_discription}</Text>
+            <Progress value={(project.current_amount / project.goal_amount) * 100} size="sm" colorScheme="green" mt="4" />
+            <Text mt="2" color="green.500" fontWeight='500'>Raised: ₹{project.current_amount}</Text>
+            <Text mt="2" color="#f78633" fontWeight='500'>Target: ₹{project.goal_amount}</Text>
+            <Text mt="2">Created by: {project.student_name}</Text>
+          </Box>
+        ))}
+      </div>
     </div>
-
   );
 };
+
+export default HomePage;

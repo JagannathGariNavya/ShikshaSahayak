@@ -10,6 +10,7 @@ import { LandingPage } from './pages/LandingPage';
 import { Footer } from './pages/Footer';
 import { NavBar } from './pages/NavBar';
 import Contact from './components/Contact';
+// import Test from './test/test';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('accessToken'));
@@ -27,6 +28,7 @@ const App = () => {
         <Route path='/change-password' element={<ChangePassword />} />
       </Routes>
       <Footer />
+      {/* <Test/> */}
     </div>
   );
 };
