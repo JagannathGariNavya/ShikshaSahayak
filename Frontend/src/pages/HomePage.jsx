@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Flex, VStack, Text, Button, Image, Progress } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom'; // Import useHistory from react-router-dom
 import '../styles/home.css';
 import pic from '../../images/kids.jpg';
 import kids from '../../images/charity.jpg';
-import lg from '../../images/logo_transparent.png'
+import lg from '../../images/logo_transparent.png';
 
 export const HomePage = () => {
   const [selectedContent, setSelectedContent] = useState('EDUCATE');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Initialize useHistory
 
   const content = {
     'START FREE FUNDING': (
@@ -68,6 +70,11 @@ export const HomePage = () => {
       });
   }, []);
 
+  const handleCardClick = (project) => {
+    localStorage.setItem('selectedProject', JSON.stringify(project));
+    navigate('/detailedProject');
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -117,7 +124,7 @@ export const HomePage = () => {
       </div>
       <div id="cards" className="cards">
         {Array.isArray(data) && data.map((project) => (
-          <Box key={project._id} borderWidth="1px" borderRadius="lg" overflow="hidden" p="4" m='7' className="card" border="1px solid #9fc948">
+          <Box key={project._id} borderWidth="1px" borderRadius="lg" overflow="hidden" p="4" m='7' className="card" border="1px solid #9fc948" onClick={() => handleCardClick(project)}>
             <Image src={lg} alt="user logo" borderRadius="full" boxSize="50px" mt="4" />
             <Text fontWeight="bold" fontSize="xl">{project.donation_title}</Text>
             <Text mt="2">{project.donation_discription}</Text>

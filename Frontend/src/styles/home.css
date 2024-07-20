@@ -232,9 +232,9 @@
 }
 
 .card {
-  /* background-image: url('https://as2.ftcdn.net/v2/jpg/07/10/38/17/1000_F_710381736_iBRUd1yNySNEppPpBSfGK7uR1Z9l5qWV.jpg');
+  background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20210706/pngtree-soft-gradient-color-background-for-ui-design_2-image_737955.jpg');
   background-position: center;
-  background-size: cover; */
+  background-size: cover;
   width: 20%; /* Adjust this value as needed */
   margin-bottom: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
