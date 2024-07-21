@@ -4,13 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 export default function ProductCard() {
     const [amount, setAmount] = useState("");
-    const [donationInfo, setDonationInfo] = useState({
-        totalAmount: 0,
-        goalAmount: 0,
-        currentAmount: 0,
-        donors: [],
-        numberOfDonors: 0
-    });
+   
     const { isOpen, onOpen, onClose } = useDisclosure()
     const project = JSON.parse(localStorage.getItem('selectedProject'));
     useEffect(() => {
@@ -83,8 +77,6 @@ export default function ProductCard() {
                             razorpay_order_id: response.razorpay_order_id,
                             razorpay_payment_id: response.razorpay_payment_id,
                             razorpay_signature: response.razorpay_signature,
-                            donor_name: "Donor Name",  // Update this with actual donor name
-                            donation_id: donationInfo._id,  // Pass the actual donation ID
                             amount: amount // Pass the donation amount
                         })
                     });
@@ -135,13 +127,7 @@ export default function ProductCard() {
                             <div>
                                 <Input placeholder="Amount" onChange={(e) => { setAmount(e.target.value) }} />
                             </div>
-                            <div>
-                                {donationInfo.donors.map(donor => (
-                                    <div key={donor.razorpay_payment_id}>
-                                        {donor.donor_name} - ₹{donor.amount}
-                                    </div>
-                                ))}
-                            </div>
+                           
                         </div>
                     </ModalBody>
 

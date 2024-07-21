@@ -33,7 +33,7 @@ router.post('/order', async (req, res) => {
 
 
 router.post('/verify', async (req, res) => {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, donor_name, donation_id, amount } = req.body;
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, amount } = req.body;
 
     try {
         console.log('Incoming verification data:', req.body); // Log incoming data
@@ -46,20 +46,8 @@ router.post('/verify', async (req, res) => {
         const isAuthentic = expectedSign === razorpay_signature;
 
         if (isAuthentic) {
-            const donation = await Customer.findById(donation_id);
+            const donation = await Customer.findById(req.user.donatee_id);
             if (donation) {
-                donation.current_amount += amount;
-                donation.total_amount_gathered += amount;
-                donation.current_donators.push({
-                    donor_name,
-                    amount,
-                    razorpay_order_id,
-                    razorpay_payment_id,
-                    razorpay_signature,
-                    donation_date: new Date()
-                });
-                await donation.save();
-
                 console.log('Donation updated successfully:', donation); // Log successful update
                 let data;
                 if(req.user.donatee_id.length == 24)data = await Customer.aggregate([{$match:{'_id':new mongoose.Types.ObjectId(req.user.donatee_id.length)}},{$project:{"student_password":0, "student_email":0}}]);
