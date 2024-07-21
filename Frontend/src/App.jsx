@@ -12,7 +12,6 @@ import { NavBar } from './pages/NavBar';
 import Contact from './components/Contact';
 import DetailedProject from './pages/DetailedProject';
 import Dashboard from './pages/Dashboard';
-import { DonateNowButton } from './pages/DonateNowButton';
 import PrivateRoute from './privateRoutes/PrivateRoute';
 // import { DonateNowButton } from './DonateNowButton';
 
@@ -39,7 +38,6 @@ const App = () => {
         <Route path='/dashboard' element={<PrivateRoute>
             <Dashboard />
           </PrivateRoute>}/>
-        <Route path='/donate'element={<DonateNowButton/>}/>
       </Routes>
       <Footer />
       {/* <Test/> */}

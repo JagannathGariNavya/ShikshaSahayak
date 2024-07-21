@@ -211,7 +211,7 @@ export function NavBar({ isLoggedIn, setIsLoggedIn }) {
               </Stack>
             </Box>
           )}
-          <Button backgroundColor='#f68631' color='white' variant="solid" mx={2} height='35px' borderRadius="30px" fontWeight="500" fontSize="lg">Start a fundraiser</Button>
+          <Button backgroundColor='#f68631' color='white' variant="solid" mx={2} height='35px' borderRadius="30px" fontWeight="500" fontSize="lg" onClick={()=>{navigate("/fundRaise")}} >Start a fundraiser</Button>
           <Box mx={2} display={{ base: 'none', lg: 'flex' }} alignItems="center">
             <Menu>
               <MenuButton as={IconButton} icon={<FaUser />} variant="outline" fontSize="lg" />
@@ -304,7 +304,7 @@ export function NavBar({ isLoggedIn, setIsLoggedIn }) {
                       }}
                     />
                   </InputGroup>
-                  <Link href="#start" onClick={onClose}>Start a fundraiser</Link>
+                  <Link to="/fundRaise">Start a fundraiser</Link>
                   {!isLoggedIn ? (
                     <>
                       <Link to="/login" onClick={onClose}>Login</Link>

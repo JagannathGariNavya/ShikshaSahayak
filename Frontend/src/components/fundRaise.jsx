@@ -43,13 +43,11 @@ export function FundRaise() {
                 <h2 style={{textAlign:"center", marginBottom: "40px" }}>Setup fundraiser</h2>
                 <form style={{ width: "100%" }} onSubmit={postProject} >
                     <VStack spacing={4}  style={{ width: "100%"}}>
-                        {!lastPage && <div><FormControl id="goal_amount" isRequired>
+                        {!lastPage && <div style={{ width:  "60%", minWidth:"300px"}}><FormControl id="goal_amount" isRequired>
                             <FormLabel>Estimated Cost</FormLabel>
                             <Input
                                 type="number"
                                 placeholder="Estimated Cost"
-                                min={10000}
-                                max={50000000}
                                 name="goal_amount"
                                 value={input.goal_amount}
                                 onChange={(e) => setInput({ ...input, [e.target.name]: e.target.value })}
@@ -112,7 +110,10 @@ export function FundRaise() {
                             </FormControl>
 
                         </div>}
-                        {!lastPage && <Button backgroundColor="#f68631" color="white" onClick={() => { setLastPage(true) }} >Next</Button>}
+                        {!lastPage && <Button backgroundColor="#f68631" color="white" onClick={() => { 
+                            
+                            setLastPage(true)
+                            }} >Next</Button>}
                         {lastPage && <Button backgroundColor="#f68631" color="white" type="submit" >Submit</Button>}
                     </VStack>
                 </form>
