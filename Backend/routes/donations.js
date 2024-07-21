@@ -1,5 +1,5 @@
 import express from 'express';
-import Customer from '../models/Payment.js';
+import Customer from "../Models/Loginmodel.js"
 
 const router = express.Router();
 

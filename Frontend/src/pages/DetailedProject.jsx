@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Carousel from 'react-multi-carousel'; // Import Carousel
 import 'react-multi-carousel/lib/styles.css'; // Import Carousel styles
 import '../pages/d.css'; // Import the custom CSS
+import ProductCard from '../components/ProductCard';
 
 const DetailedProject = () => {
   const [newComment, setNewComment] = useState('');
@@ -247,13 +248,10 @@ const DetailedProject = () => {
           />
           <Text fontSize="2xl" color={orange} mb={4}>Current Fund: ₹{project.current_amount}</Text>
           <Text fontSize="2xl" color={orange} mb={6}>Goal Amount: ₹{project.goal_amount}</Text>
-          <Link to="/donate">
-            <Button colorScheme="orange" size="lg" fontSize="lg" _hover={{ bg: 'orange.600' }}>
-              Donate Now
-            </Button>
-          </Link>
+          <ProductCard />
         </VStack>
       </Box>
+      
     </Flex>
   );
 };

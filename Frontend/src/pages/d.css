@@ -49,13 +49,8 @@
 }
 
 /* Improve button appearance */
-button {
-  font-family: 'Arial', sans-serif; /* Use a clean sans-serif font */
-}
 
-button:hover {
-  background-color: #ff8c00; /* Darker orange for hover */
-}
+
 
 /* Responsive design adjustments */
 @media (max-width: 768px) {

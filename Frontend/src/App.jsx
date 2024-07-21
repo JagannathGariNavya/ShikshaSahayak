@@ -12,12 +12,12 @@ import { NavBar } from './pages/NavBar';
 import Contact from './components/Contact';
 import DetailedProject from './pages/DetailedProject';
 import Dashboard from './pages/Dashboard';
-import { DonateNowButton } from './pages/DonateNowButton';
 import PrivateRoute from './privateRoutes/PrivateRoute';
 // import { DonateNowButton } from './DonateNowButton';
 
 
 // import Test from './test/test';
+import { FundRaise } from './components/fundRaise';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('accessToken'));
@@ -34,10 +34,10 @@ const App = () => {
         <Route path='/forgotpassword' element={<ForgotPassword />} />
         <Route path='/change-password' element={<ChangePassword />} />
         <Route path='/detailedProject' element={<DetailedProject/>} />
+        <Route path='/fundRaise' element={<FundRaise/>}/>
         <Route path='/dashboard' element={<PrivateRoute>
             <Dashboard />
           </PrivateRoute>}/>
-        <Route path='/donate'element={<DonateNowButton/>}/>
       </Routes>
       <Footer />
       {/* <Test/> */}

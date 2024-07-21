@@ -12,7 +12,8 @@ import protect from './middlewares/auth.js';
 import userData from './routes/userData.js';
 import postProject from './routes/postProject.js';
 import router from './routes/geminiRoute.js';
-
+import paymentRoutes from "./routes/payment.js"
+import donationRoutes from "./routes/donations.js"
 
 const app = express();
 app.use(cors());
@@ -23,6 +24,8 @@ app.use("/user",protect, userData);
 app.use("/project",protect, postProject)
 app.use('/api', Otprouter);
 app.use('/api',loginrouter);
+app.use('/api/payment', paymentRoutes);
+app.use('/api/donations', donationRoutes); // Add the donations route
 
 app.use('/', (req, res) => {
     res.send("this is home route ");
