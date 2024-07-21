@@ -14,7 +14,7 @@ const razorpayInstance = new Razorpay({
 // ROUTE: Create Payment Order
 router.post('/order', async (req, res) => {
     const { amount,  _id } = req.body;
-    req.user.donatee_id = _id
+    req.user["donatee_id"] = _id;
     try {
         const options = {
             amount: amount * 100,
