@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import 'dotenv/config';
-import Customer from '../Models/Loginmodel.js';
+import Customer from '../models/Loginmodel.js';
 import jwt from 'jsonwebtoken';
 
 // Temporary store for OTPs
@@ -11,19 +11,19 @@ const generateOTP = () => {
 };
 
 export const emailSender = async (req, res) => {
-  const { student_email } = req.body;
-  if (!student_email ) {
+  const { email } = req.body;
+  if (!email ) {
     console.log("emailnot found");
     return res.status(400).send("Invalid request body. 'email' is required.");
   }
-  const userExist = await Customer.findOne({ student_email });
+  const userExist = await Customer.findOne({ email });
   console.log(userExist);
   if (!userExist) {
     return res.status(400).send("user Not Exist Try To Sign-up");
   }
 
   const otpCode = generateOTP();
-  otpStore.set(student_email, otpCode); // Store OTP temporarily
+  otpStore.set(email, otpCode); // Store OTP temporarily
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -36,7 +36,7 @@ export const emailSender = async (req, res) => {
   try {
     const info = await transporter.sendMail({
       from: process.env.user_email, // sender address
-      to: student_email, // list of receivers
+      to: email, // list of receivers
       subject: "OTP confirmation", // Subject line
       text: `Hello, your OTP code is ${otpCode}.`, // plain text body
       html: `<p>Your OTP code is <strong>${otpCode}</strong>.</p>`, // html body
@@ -51,15 +51,15 @@ export const emailSender = async (req, res) => {
 };
 
 export const verifyOTP = (req, res) => {
-  const {student_email, otp } = req.body;
+  const { email, otp } = req.body;
 
-  if (!student_email || !otp) {
+  if (!email || !otp) {
     return res.status(400).send("Invalid request body. 'email' and 'otp' are required.");
   }
 
-  const storedOtp = otpStore.get(student_email);
+  const storedOtp = otpStore.get(email);
   if (storedOtp === otp) {
-    otpStore.delete(student_email); // OTP is valid, remove it from store
+    otpStore.delete(email); // OTP is valid, remove it from store
     return res.status(200).send("OTP verified successfully.");
   } else {
     return res.status(400).send("Invalid OTP.");

@@ -23,6 +23,8 @@ app.use("/user",protect, userData);
 app.use("/project",protect, postProject)
 app.use('/api', Otprouter);
 app.use('/api',loginrouter);
+import "./utils/geminiApi.js"
+app.use("/apie",router);
 
 app.use('/', (req, res) => {
     res.send("this is home route ");
@@ -31,8 +33,7 @@ app.use('/', (req, res) => {
 
 
 const PORT = process.env.PORT || 3200;
-import "./utils/geminiApi.js"
-app.use("/apie",router);
+
 app.listen(PORT, async () => {
     try {
         connectDB()

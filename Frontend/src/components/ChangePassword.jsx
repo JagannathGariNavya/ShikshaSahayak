@@ -43,7 +43,7 @@ const ChangePassword = () => {
           flex="1"
           minW="200px"
         />
-        <Button type="submit" colorScheme="teal" flex="none">
+        <Button type="submit" colorScheme="teal" bg="#F68631" flex="none">
           Change Password
         </Button>
       </HStack>

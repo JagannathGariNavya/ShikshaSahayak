@@ -158,14 +158,15 @@ const ForgotPassword = () => {
                         <FormControl id="password" mt="4" isRequired>
                             <FormLabel>Email</FormLabel>
                             <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Enter Email' required /><br/>
-                            <Button type="submit" colorScheme="teal">
+                            <Button type="submit" colorScheme="teal"  bg="green"  mt="2">
                                 Send OTP
                             </Button>
                         </FormControl>
                     </form>
 
                 ) : (
-                    <>
+                    <>   
+                    <Box display="flex" gap="2px" alignItems="center">
                         <PinInput value={otp} onChange={handleOtpChange} onComplete={handleOtpComplete}>
                             <PinInputField />
                             <PinInputField />
@@ -174,7 +175,8 @@ const ForgotPassword = () => {
                             <PinInputField />
                             <PinInputField />
                         </PinInput>
-                        <Button onClick={() => handleOtpComplete(otp)} colorScheme="teal">
+                        </Box>
+                        <Button onClick={() => handleOtpComplete(otp)} colorScheme="teal"  bg="#F68631" >
                             Verify OTP
                         </Button>
                     </>

@@ -22,7 +22,7 @@ const customerSchema = new mongoose.Schema({
     role: {
         type: String,
         default: "student",
-        enum:["student","admin","donor"],
+        enum: ["student", "admin", "donor"],
     },
     student_age: { type: Number },
     donation_title: { type: String },
@@ -50,6 +50,7 @@ customerSchema.methods.comparePassword = function (candidatePassword) {
     return bcrypt.compare(candidatePassword, this.student_password);
 };
 
-const Customer = mongoose.model('Customer', customerSchema);
+// Avoid model overwriting
+const Customer = mongoose.models.Customer || mongoose.model('Customer', customerSchema);
 
 export default Customer;

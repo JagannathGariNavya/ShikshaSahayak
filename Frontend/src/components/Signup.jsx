@@ -69,7 +69,7 @@ const RegisterForm = () => {
           {error && <Text color="red.500">{error}</Text>}
           {success && <Text color="green.500">{success}</Text>}
           
-          <Button type="submit" colorScheme="teal" width="full">Register</Button>
+          <Button type="submit" colorScheme="green" bg="#F68631"width="full">Register</Button>
         </VStack>
       </form>
       
