@@ -206,26 +206,7 @@ const DetailedProject = () => {
             Add Comment
           </Button>
         </FormControl>
-
-        <Heading as="h3" size="lg" mb={4} color={orange}>
-          Payment Options:
-        </Heading>
-        <Table variant="simple" mb={6}>
-          <Thead>
-            <Tr>
-              <Th color="black">Payment Option</Th>
-              <Th color="black">Details</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {project.payment_recive_option.map((option) => (
-              <Tr key={option._id} _hover={{ bg: lightGray }}>
-                <Td color="black">{option.paymnet_recive_name}</Td>
-                <Td color="black">{option.payment_recive_details}</Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
+        
       </Box>
 
       {/* Donation Section */}
