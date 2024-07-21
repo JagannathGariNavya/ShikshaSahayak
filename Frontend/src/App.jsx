@@ -12,6 +12,7 @@ import { NavBar } from './pages/NavBar';
 import Contact from './components/Contact';
 import DetailedProject from './pages/DetailedProject';
 import Dashboard from './pages/Dashboard';
+import PrivateRoute from './privateRoutes/PrivateRoute';
 // import Test from './test/test';
 
 const App = () => {
@@ -29,9 +30,14 @@ const App = () => {
         <Route path='/forgotpassword' element={<ForgotPassword />} />
         <Route path='/change-password' element={<ChangePassword />} />
         <Route path='/detailedProject' element={<DetailedProject/>} />
-        <Route path='/dashboard' element={<Dashboard/> }/>
+        <Route path='/dashboard' element={<PrivateRoute>
+            <Dashboard />
+          </PrivateRoute> }/>
+
+        
       </Routes>
       <Footer />
+
       {/* <Test/> */}
     </div>
   );

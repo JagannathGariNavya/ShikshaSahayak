@@ -25,3 +25,11 @@ export const updateProject = (token, projectData) => {
     },
   });
 };
+
+export const getUsers = (token) => {
+  return axios.get(`${API_BASE_URL}/user`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

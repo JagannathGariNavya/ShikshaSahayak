@@ -1,4 +1,4 @@
-// import React, { useState } from 'react';
+// import React, { useState, useEffect, useCallback } from 'react';
 // import {
 //   Box,
 //   Flex,
@@ -22,18 +22,27 @@
 //   Input,
 //   InputLeftElement,
 //   Collapse,
+//   Spinner,
+//   Text,
 // } from '@chakra-ui/react';
 // import { HamburgerIcon, CloseIcon, SearchIcon, ChevronDownIcon } from '@chakra-ui/icons';
 // import { FaUser } from 'react-icons/fa';
-// import { Link as RouterLink } from 'react-router-dom';
+// import { Link as RouterLink, useNavigate } from 'react-router-dom';
+// import axios from 'axios';
 // import logo from '../../images/logo.png';
+
+// const API_URL = 'https://shikshasahayak.onrender.com/projects';
 
 // export function NavBar() {
 //   const { isOpen, onOpen, onClose } = useDisclosure();
 //   const [isDonateOpen, setDonateOpen] = useState(false);
 //   const [isFundraiserOpen, setFundraiserOpen] = useState(false);
 //   const [isAboutOpen, setAboutOpen] = useState(false);
-//   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('accessToken'));
+//   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('accessToken'));
+//   const [searchQuery, setSearchQuery] = useState('');
+//   const [searchResults, setSearchResults] = useState([]);
+//   const [isSearching, setIsSearching] = useState(false);
+//   const navigate = useNavigate();
 
 //   const handleToggle = (menu) => {
 //     switch (menu) {
@@ -55,12 +64,70 @@
 //     localStorage.removeItem('accessToken');
 //     localStorage.removeItem('refreshToken');
 //     setIsLoggedIn(false);
-//     window.location.href = '/';
+//     navigate('/login');
+//   };
+
+//   const handleSearch = useCallback(
+//     (query) => {
+//       if (query.trim().length === 0) {
+//         setSearchResults([]);
+//         return;
+//       }
+//       setIsSearching(true);
+//       axios
+//         .get(API_URL)
+//         .then((response) => {
+//           const results = response.data.filter((item) =>
+//             item.donation_title.toLowerCase().includes(query.toLowerCase())
+//           );
+//           setSearchResults(results);
+//         })
+//         .catch(() => {
+//           setSearchResults([]);
+//         })
+//         .finally(() => {
+//           setIsSearching(false);
+//         });
+//     },
+//     [setSearchResults]
+//   );
+
+//   const debounce = (func, delay) => {
+//     let debounceTimer;
+//     return function (...args) {
+//       clearTimeout(debounceTimer);
+//       debounceTimer = setTimeout(() => func(...args), delay);
+//     };
+//   };
+
+//   const handleInputChange = (event) => {
+//     setSearchQuery(event.target.value);
+//     debouncedSearch(event.target.value);
+//   };
+
+//   const debouncedSearch = useCallback(debounce(handleSearch, 300), [handleSearch]);
+
+//   useEffect(() => {
+//     if (searchQuery.trim() === '') {
+//       setSearchResults([]);
+//     }
+//   }, [searchQuery]);
+
+//   const handleSearchSubmit = () => {
+//     const selectedResult = searchResults.find(
+//       (result) => result.donation_title.toLowerCase() === searchQuery.toLowerCase()
+//     );
+//     if (selectedResult) {
+//       navigate(`/project/${selectedResult._id}`);
+//     } else {
+//       alert('No results based on your search');
+//     }
 //   };
 
 //   return (
 //     <Box
-//       position="fixed"
+//       position="sticky"
+//       top="0"
 //       width="100%"
 //       bg="rgba(255, 255, 255, 0.8)"
 //       backdropFilter="blur(10px)"
@@ -102,17 +169,49 @@
 //               <MenuItem as={Link} href="#aboutInfo">Support</MenuItem>
 //               <MenuItem as={Link} href="#aboutInfo">Help</MenuItem>
 //               <MenuItem as={Link} href="#aboutInfo">FAQ's</MenuItem>
-//               <MenuItem as={Link} href="/contact">Contact Info</MenuItem>
+//               <MenuItem as={RouterLink} to="/contact">Contact Info</MenuItem>
 //             </MenuList>
 //           </Menu>
 //         </Box>
-//         <Flex alignItems="center">
+//         <Flex alignItems="center" position="relative">
 //           <InputGroup size="sm" width="200px" mr={4} display={{ base: 'none', lg: 'flex' }}>
 //             <InputLeftElement pointerEvents="none">
 //               <SearchIcon color="gray.500" />
 //             </InputLeftElement>
-//             <Input type="search" placeholder="Search" />
+//             <Input
+//               type="search"
+//               placeholder="Search"
+//               value={searchQuery}
+//               onChange={handleInputChange}
+//               onKeyPress={(e) => {
+//                 if (e.key === 'Enter') {
+//                   handleSearchSubmit();
+//                 }
+//               }}
+//             />
 //           </InputGroup>
+//           {isSearching && <Spinner size="sm" />}
+//           {!isSearching && searchResults.length === 0 && searchQuery && (
+//             <Box position="absolute" bg="white" width="200px" mt={20} borderRadius="md" boxShadow="md" zIndex="1000">
+//               <Stack>
+//                 <Box textAlign='center'><Text>No results found</Text></Box>
+//               </Stack>
+//             </Box>
+//           )}
+//           {searchResults.length > 0 && (
+//             <Box position="absolute" bg="white" width="200px" mt={1} borderRadius="md" boxShadow="md" zIndex="1000">
+//               <Stack>
+//                 {searchResults.map((result) => (
+//                   <Link
+//                     key={result._id}
+//                     onClick={() => navigate(`/project/${result._id}`)}
+//                   >
+//                     {result.donation_title}
+//                   </Link>
+//                 ))}
+//               </Stack>
+//             </Box>
+//           )}
 //           <Button backgroundColor='#f68631' color='white' variant="solid" mx={2} height='35px' borderRadius="30px" fontWeight="500" fontSize="lg">Start a fundraiser</Button>
 //           <Box mx={2} display={{ base: 'none', lg: 'flex' }} alignItems="center">
 //             <Menu>
@@ -120,11 +219,19 @@
 //               <MenuList>
 //                 {!isLoggedIn ? (
 //                   <>
-//                     <MenuItem as={RouterLink} to="/login">Login</MenuItem>
+//                     <MenuItem as={RouterLink} to="/login" onClick={() => {
+//                       localStorage.setItem('accessToken', 'yourAccessTokenHere');
+//                       localStorage.setItem('refreshToken', 'yourRefreshTokenHere');
+//                       setIsLoggedIn(true);
+//                     }}>Login</MenuItem>
 //                     <MenuItem as={RouterLink} to="/signup">Register</MenuItem>
 //                   </>
 //                 ) : (
-//                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
+//                   <>
+//                     <MenuItem as={RouterLink} to="/dashboard">Dashboard</MenuItem>
+//                     <MenuItem as={RouterLink} to="/profile">Profile</MenuItem>
+//                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
+//                   </>
 //                 )}
 //               </MenuList>
 //             </Menu>
@@ -190,7 +297,17 @@
 //                     <InputLeftElement pointerEvents="none">
 //                       <SearchIcon color="gray.500" />
 //                     </InputLeftElement>
-//                     <Input type="search" placeholder="Search" />
+//                     <Input
+//                       type="search"
+//                       placeholder="Search"
+//                       value={searchQuery}
+//                       onChange={handleInputChange}
+//                       onKeyPress={(e) => {
+//                         if (e.key === 'Enter') {
+//                           handleSearchSubmit();
+//                         }
+//                       }}
+//                     />
 //                   </InputGroup>
 //                   <Link href="#start" onClick={onClose}>Start a fundraiser</Link>
 //                   {!isLoggedIn ? (
@@ -199,7 +316,11 @@
 //                       <Link to="/signup" onClick={onClose}>Register</Link>
 //                     </>
 //                   ) : (
-//                     <Link onClick={() => { handleLogout(); onClose(); }}>Logout</Link>
+//                     <>
+//                       <Link to="/dashboard" onClick={onClose}>Dashboard</Link>
+//                       <Link to="/profile" onClick={onClose}>Profile</Link>
+//                       <Link onClick={() => { handleLogout(); onClose(); }}>Logout</Link>
+//                     </>
 //                   )}
 //                 </Stack>
 //               </DrawerBody>
@@ -210,6 +331,8 @@
 //     </Box>
 //   );
 // }
+
+
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
@@ -245,12 +368,11 @@ import logo from '../../images/logo.png';
 
 const API_URL = 'https://shikshasahayak.onrender.com/projects';
 
-export function NavBar() {
+export function NavBar({ isLoggedIn, setIsLoggedIn }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isDonateOpen, setDonateOpen] = useState(false);
   const [isFundraiserOpen, setFundraiserOpen] = useState(false);
   const [isAboutOpen, setAboutOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('accessToken'));
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -276,7 +398,7 @@ export function NavBar() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     setIsLoggedIn(false);
-    window.location.href = '/';
+    navigate('/login');
   };
 
   const handleSearch = useCallback(
