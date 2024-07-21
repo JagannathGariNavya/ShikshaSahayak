@@ -13,6 +13,7 @@ import Contact from './components/Contact';
 import DetailedProject from './pages/DetailedProject';
 import Dashboard from './pages/Dashboard';
 import { DonateNowButton } from './pages/DonateNowButton';
+import PrivateRoute from './privateRoutes/PrivateRoute';
 // import { DonateNowButton } from './DonateNowButton';
 
 
@@ -33,7 +34,9 @@ const App = () => {
         <Route path='/forgotpassword' element={<ForgotPassword />} />
         <Route path='/change-password' element={<ChangePassword />} />
         <Route path='/detailedProject' element={<DetailedProject/>} />
-        <Route path='/dashboard' element={<Dashboard/> }/>
+        <Route path='/dashboard' element={<PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>}/>
         <Route path='/donate'element={<DonateNowButton/>}/>
       </Routes>
       <Footer />
