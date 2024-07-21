@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import Carousel from 'react-multi-carousel'; // Import Carousel
 import 'react-multi-carousel/lib/styles.css'; // Import Carousel styles
-import '../pages/d.css'; // Import the custom CSS
+import '../styles/d.css'; // Import the custom CSS
 
 const DetailedProject = () => {
   const [newComment, setNewComment] = useState('');

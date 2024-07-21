@@ -14,6 +14,7 @@ import DetailedProject from './pages/DetailedProject';
 import Dashboard from './pages/Dashboard';
 import { DonateNowButton } from './pages/DonateNowButton';
 import PrivateRoute from './privateRoutes/PrivateRoute';
+import PromptForm from './components/Chatbot';
 // import { DonateNowButton } from './DonateNowButton';
 
 
@@ -21,6 +22,11 @@ import PrivateRoute from './privateRoutes/PrivateRoute';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('accessToken'));
+  const [showPromptForm, setShowPromptForm] = useState(false);
+
+  const handleButtonClick = () => {
+    setShowPromptForm(!showPromptForm);
+  };
 
   return (
     <div>
@@ -40,6 +46,41 @@ const App = () => {
         <Route path='/donate'element={<DonateNowButton/>}/>
       </Routes>
       <Footer />
+      <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 1000 }}>
+        {/* PromptForm appears to the left of the button */}
+        {showPromptForm && (
+          <div style={{
+            position: 'absolute',
+            bottom: '100%',
+            right: '100%',
+            marginRight: '10px', // Adjust spacing as needed
+            width: '300px', // Adjust width as needed
+            backgroundColor: '#fff',
+            border: '1px solid #ddd',
+            borderRadius: '5px',
+            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+            zIndex: 1001
+          }}>
+            <PromptForm />
+          </div>
+        )}
+        
+        {/* Sticky button */}
+        <button 
+          style={{
+            backgroundColor: '#007bff',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '5px',
+            padding: '10px 20px',
+            cursor: 'pointer',
+            zIndex: 1000
+          }} 
+          onClick={handleButtonClick}
+        >
+          Bot
+        </button>
+      </div>
       {/* <Test/> */}
     </div>
   );
