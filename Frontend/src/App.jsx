@@ -41,9 +41,11 @@ const App = () => {
         <Route path='/forgotpassword' element={<ForgotPassword />} />
         <Route path='/change-password' element={<ChangePassword />} />
         <Route path='/detailedProject' element={<DetailedProject/>} />
-        <Route path='/fundRaise' element={<FundRaise/>}/>
+        <Route path='/fundRaise' element={
+          <PrivateRoute><FundRaise/></PrivateRoute>}/>
         <Route path='/dashboard' element={<PrivateRoute>
             <Dashboard />
+      
           </PrivateRoute>}/>
       </Routes>
       <Footer />
