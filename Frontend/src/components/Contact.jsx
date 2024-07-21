@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import emailjs from 'emailjs-com';
 import { Box, Button, FormControl, FormLabel, Input, Textarea, useToast } from '@chakra-ui/react';
-import '../pages/d.css';
+import '../styles/d.css';
 
 const Contact = () => {
   const form = useRef();
