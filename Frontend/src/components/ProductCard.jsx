@@ -17,7 +17,7 @@ export default function ProductCard() {
         // Fetch donation information from your backend
         const fetchDonationInfo = async () => {
             try {
-                const res = await fetch('http://localhost:4000/api/donations/'); // Direct path
+                const res = await fetch('https://shikshasahayak.onrender.com/api/donations/'); // Direct path
                 if (!res.ok) throw new Error('Network response was not ok.');
                 const data = await res.json();
                 if (data.length > 0) {
@@ -48,7 +48,7 @@ export default function ProductCard() {
 
     const handlePayment = async () => {
         try {
-            const res = await fetch('http://localhost:4000/api/payment/order', { // Direct path
+            const res = await fetch('https://shikshasahayak.onrender.com/api/payment/order', { // Direct path
                 method: "POST",
                 headers: {
                     "content-type": "application/json"
@@ -74,7 +74,7 @@ export default function ProductCard() {
             order_id: data.id,
             handler: async (response) => {
                 try {
-                    const res = await fetch('http://localhost:4000/api/payment/verify', { // Direct path
+                    const res = await fetch('https://shikshasahayak.onrender.com/api/payment/verify', { // Direct path
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json'
