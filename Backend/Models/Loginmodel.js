@@ -26,7 +26,7 @@ const customerSchema = new mongoose.Schema({
     },
     student_age: { type: Number },
     donation_title: { type: String },
-    donation_description: { type: String },
+    donation_discription: { type: String },
     updates_on_donation: { type: [String] },
     media_images: { type: [String] },
     time_of_creation: { type: Date },

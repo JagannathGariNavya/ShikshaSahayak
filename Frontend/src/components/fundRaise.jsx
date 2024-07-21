@@ -8,7 +8,6 @@ export function FundRaise() {
     const [lastPage, setLastPage] = useState(false);
     const navigate = useNavigate()
     const accessToken = localStorage.getItem("accessToken")
-    console.log(accessToken);
     const config =  {headers:{Authorization:`Bearer ${accessToken}`}}
     async function postProject(e) {
         e.preventDefault();
