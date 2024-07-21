@@ -12,7 +12,7 @@ export default function ProductCard() {
         numberOfDonors: 0
     });
     const { isOpen, onOpen, onClose } = useDisclosure()
-
+    const project = JSON.parse(localStorage.getItem('selectedProject'));
     useEffect(() => {
         // Fetch donation information from your backend
         const fetchDonationInfo = async () => {
@@ -53,7 +53,7 @@ export default function ProductCard() {
                 headers: {
                     "content-type": "application/json"
                 },
-                body: JSON.stringify({ amount })
+                body: JSON.stringify({ amount, _id:project._id })
             });
             console.log(res);
             if (!res.ok) throw new Error('Network response was not ok.');

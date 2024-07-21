@@ -13,8 +13,8 @@ const razorpayInstance = new Razorpay({
 
 // ROUTE: Create Payment Order
 router.post('/order', async (req, res) => {
-    const { amount } = req.body;
-
+    const { amount,  _id } = req.body;
+    req.user.donatee_id = _id
     try {
         const options = {
             amount: amount * 100,
@@ -61,6 +61,21 @@ router.post('/verify', async (req, res) => {
                 await donation.save();
 
                 console.log('Donation updated successfully:', donation); // Log successful update
+                let data;
+                if(req.user.donatee_id.length == 24)data = await Customer.aggregate([{$match:{'_id':new mongoose.Types.ObjectId(req.user.donatee_id.length)}},{$project:{"student_password":0, "student_email":0}}]);
+                else data = await Customer.aggregate([{$match:{'_id':Number(req.user.donatee_id.length)}},{$project:{"student_password":0, "student_email":0}}]);
+                
+                data = data[0];
+
+                let user_name;
+                if(req.user.id.length == 24)user_name = await Customer.aggregate([{$match:{'_id':new mongoose.Types.ObjectId(req.user.id)}},{$project:{"student_name":1}}]);
+                else user_name = await Customer.aggregate([{$match:{'_id':Number(req.user.id)}},{$project:{"student_name":1}}]);
+
+                user_name = user_name[0];
+
+                if(req.user.donatee_id.length == 24) await Customer.updateOne({'_id':new mongoose.Types.ObjectId(req.user.donatee_id)},{$set:{total_amount:data.total_amount+amount, current_amount:data.current_amount+amount, current_donators:[...data.current_donators,{_id:data.current_donators.length+1,donator_id:res.user.id,name:user_name.student_name,amount:amount}]}});
+                else  await Customer.updateOne({'_id':Number(req.user.donatee_id)},{$set:{total_amount:data.total_amount+amount, current_amount:data.current_amount+amount, current_donators:[...data.current_donators,{_id:data.current_donators.length+1,donator_id:res.user.id,name:user_name.student_name,amount:amount}]}});
+
                 res.json({ message: "Payment Successfully" });
             } else {
                 console.log('Donation not found for ID:', donation_id); // Log missing donation
