@@ -11,6 +11,9 @@ import projectRoutes from './routes/projectRoutes.js';
 import protect from './middlewares/auth.js';
 import userData from './routes/userData.js';
 import postProject from './routes/postProject.js';
+import router from './routes/geminiRoute.js';
+
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -26,7 +29,10 @@ app.use('/', (req, res) => {
 
 });
 
+
 const PORT = process.env.PORT || 3200;
+import "./utils/geminiApi.js"
+app.use("/apie",router);
 app.listen(PORT, async () => {
     try {
         connectDB()
