@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Flex, VStack, Text, Button, Image, Progress } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom'; // Import useHistory from react-router-dom
+import { useNavigate } from 'react-router-dom';
 import '../styles/home.css';
 import pic from '../../images/kids.jpg';
 import kids from '../../images/charity.jpg';
@@ -11,7 +11,7 @@ export const HomePage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // Initialize useHistory
+  const navigate = useNavigate();
 
   const content = {
     'START FREE FUNDING': (
@@ -95,14 +95,14 @@ export const HomePage = () => {
         </p>
       </div>
       <Flex w="100%" justify="center">
-        <Flex border="1px solid #9fc74a" borderRadius="md" boxShadow="lg" p="4" bg="white" width='100%' ml='20' mr='20' >
-          <VStack align="flex-start" spacing="4" mt="16">
+        <Flex border="1px solid #9fc74a" borderRadius="md" boxShadow="lg" p="4" bg="white" width={{ base: '100%', md: '80%' }} ml="auto" mr="auto" direction={{ base: 'column', md: 'row' }}>
+          <VStack align="flex-start" spacing="4" mt="16" w={{ base: '100%', md: '30%' }}>
             {Object.keys(content).map((key) => (
               <Button
                 key={key}
                 variant={selectedContent === key ? 'solid' : 'outline'}
-                backgroundColor='#f8852f'
-                color='white'
+                backgroundColor={selectedContent === key ? '#f8852f' : 'white'}
+                color={selectedContent === key ? 'white' : '#f8852f'}
                 w="100%"
                 onClick={() => setSelectedContent(key)}
               >
@@ -110,7 +110,7 @@ export const HomePage = () => {
               </Button>
             ))}
           </VStack>
-          <Box ml="8" p="4" borderLeft="1px solid #9fc74a" minWidth="300px" minHeight="200px">
+          <Box ml={{ base: '0', md: '8' }} mt={{ base: '8', md: '0' }} p="4" borderLeft={{ md: '1px solid #9fc74a' }} w={{ base: '100%', md: '70%' }}>
             <Text fontSize="lg" mb="4">
               {selectedContent}
             </Text>
@@ -120,17 +120,17 @@ export const HomePage = () => {
       </Flex>
       <div id="char">
         <h3>"Investing in education is the most powerful way to create a brighter future. Your support can change a life, and through that life, change the world."</h3>
-        <img src={kids} alt="kids"/>
+        <img src={kids} alt="kids" />
       </div>
       <div id="cards" className="cards">
         {Array.isArray(data) && data.map((project) => (
-          <Box key={project._id} borderWidth="1px" borderRadius="lg" overflow="hidden" p="4" m='7' className="card" border="1px solid #9fc948" onClick={() => handleCardClick(project)}>
+          <Box key={project._id} borderWidth="1px" borderRadius="lg" overflow="hidden" p="4" m="7" className="card" border="1px solid #9fc948" onClick={() => handleCardClick(project)}>
             <Image src={lg} alt="user logo" borderRadius="full" boxSize="50px" mt="4" />
             <Text fontWeight="bold" fontSize="xl">{project.donation_title}</Text>
             <Text mt="2">{project.donation_discription}</Text>
             <Progress value={(project.current_amount / project.goal_amount) * 100} size="sm" colorScheme="green" mt="4" />
-            <Text mt="2" color="green.500" fontWeight='500'>Raised: ₹{project.current_amount}</Text>
-            <Text mt="2" color="#f78633" fontWeight='500'>Target: ₹{project.goal_amount}</Text>
+            <Text mt="2" color="green.500" fontWeight="500">Raised: ₹{project.current_amount}</Text>
+            <Text mt="2" color="#f78633" fontWeight="500">Target: ₹{project.goal_amount}</Text>
             <Text mt="2">Created by: {project.student_name}</Text>
           </Box>
         ))}
