@@ -46,7 +46,9 @@ router.post('/verify', async (req, res) => {
         const isAuthentic = expectedSign === razorpay_signature;
 
         if (isAuthentic) {
-            const donation = await Customer.findById(req.user.donatee_id);
+            let donation;
+            if(req.user.donatee_id.length == 24) donation = await Customer.find({'_id': mongoose.Types.ObjectId(req.user.donatee_id)});
+            else donation = await Customer.find({'_id':Number(req.user.donatee_id)});
             if (donation) {
                 console.log('Donation updated successfully:', donation); // Log successful update
                 let data;
