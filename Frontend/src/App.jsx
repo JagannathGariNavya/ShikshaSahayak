@@ -12,6 +12,10 @@ import { NavBar } from './pages/NavBar';
 import Contact from './components/Contact';
 import DetailedProject from './pages/DetailedProject';
 import Dashboard from './pages/Dashboard';
+import { DonateNowButton } from './pages/DonateNowButton';
+// import { DonateNowButton } from './DonateNowButton';
+
+
 // import Test from './test/test';
 
 const App = () => {
@@ -30,6 +34,7 @@ const App = () => {
         <Route path='/change-password' element={<ChangePassword />} />
         <Route path='/detailedProject' element={<DetailedProject/>} />
         <Route path='/dashboard' element={<Dashboard/> }/>
+        <Route path='/donate'element={<DonateNowButton/>}/>
       </Routes>
       <Footer />
       {/* <Test/> */}
