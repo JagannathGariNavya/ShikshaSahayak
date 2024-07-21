@@ -23,6 +23,8 @@ import { Footer } from './Footer';
 import pic from '../../images/logo_transparent.png'
 import picture from '../../images/school2.jpg'
 import { Link } from 'react-router-dom';
+// import Chat from '../components/G';
+// import Chat from '../components/Chat.jsx';
 
 export const LandingPage = () => {
   const [barVisible, setBarVisible] = useState(false);

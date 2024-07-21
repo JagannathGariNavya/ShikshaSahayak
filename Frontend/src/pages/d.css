@@ -1,36 +1,140 @@
-/* src/pages/d.css */
+.detailed-project-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.project-details {
+  border-right: 1px solid #e2e8f0;
+  background-color: #f7fafc;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.donation-section {
+  background-color: #e6ffe6; /* Light green background for donation section */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.project-details h1, .project-details h3 {
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  color: #FFA500; /* Orange for headings */
+}
+
+.project-details p, .project-details li {
+  margin: 10px 0;
+  font-size: 1.1rem; /* Slightly larger text for better readability */
+}
+
+.donation-section h1, .donation-section h3 {
+  color: #006400; /* Dark green for headings */
+  margin-bottom: 10px;
+}
+
+.donation-section p {
+  color: #228B22; /* Green text for donation details */
+  font-size: 1.2rem; /* Slightly larger text for emphasis */
+}
+
+/* Improve image hover effect */
+.project-details img, .donation-section img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.project-details img:hover, .donation-section img:hover {
+  transform: scale(1.05);
+}
+
+/* Improve button appearance */
+button {
+  font-family: 'Arial', sans-serif; /* Use a clean sans-serif font */
+}
+
+button:hover {
+  background-color: #ff8c00; /* Darker orange for hover */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .detailed-project-container {
+      flex-direction: column;
+  }
+}
+/* d.css */
 
 .detailed-project-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .project-details {
-    border-right: 1px solid #e2e8f0;
-    background-color: #f7fafc;
-  }
-  
-  .donation-section {
-    background-color: #e6ffe6; /* Light green background for donation section */
-  }
-  
-  .project-details h1, .project-details h3 {
-    border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 10px;
-  }
-  
-  .project-details p, .project-details li {
-    margin: 10px 0;
-  }
-  
-  .donation-section h1, .donation-section h3 {
-    color: #006400; /* Dark green for headings */
-  }
-  
-  .donation-section p {
-    color: #228B22; /* Green text for donation details */
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.project-details {
+  border-right: 1px solid #e2e8f0;
+  background-color: #f7fafc;
+}
+
+.donation-section {
+  background-color: #e6ffe6; /* Light green background for donation section */
+}
+
+.project-details h1, .project-details h3 {
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 10px;
+}
+
+.project-details p, .project-details li {
+  margin: 10px 0;
+}
+
+.donation-section h1, .donation-section h3 {
+  color: #006400; /* Dark green for headings */
+}
+
+.donation-section p {
+  color: #228B22; /* Green text for donation details */
+}
+
+/* Comments Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+
+thead {
+  background-color: #f7fafc;
+}
+
+tbody tr:hover {
+  background-color: #f4f4f4; /* Light gray for row background */
+}
+
+td, th {
+  border: 1px solid #e2e8f0;
+}
+
+/* Payment Options Cards */
+.payment-card {
+  background-color: #e6f9ff; /* Light blue background for cards */
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.payment-card:hover {
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+
   /* src/components/Contact.css */
 
 /* src/components/Contact.css */
