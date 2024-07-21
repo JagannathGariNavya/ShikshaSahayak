@@ -13,6 +13,7 @@ import Contact from './components/Contact';
 import DetailedProject from './pages/DetailedProject';
 import Dashboard from './pages/Dashboard';
 // import Test from './test/test';
+import { FundRaise } from './components/fundRaise';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('accessToken'));
@@ -30,6 +31,7 @@ const App = () => {
         <Route path='/change-password' element={<ChangePassword />} />
         <Route path='/detailedProject' element={<DetailedProject/>} />
         <Route path='/dashboard' element={<Dashboard/> }/>
+        <Route path='/fundRaise' element={<FundRaise/>}/>
       </Routes>
       <Footer />
       {/* <Test/> */}
