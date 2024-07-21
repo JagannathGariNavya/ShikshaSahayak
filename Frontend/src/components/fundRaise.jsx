@@ -4,45 +4,45 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 export function FundRaise() {
     const toast = useToast();
-    const [input, setInput] = useState({ media_images: [], goal_amount: "", donation_active_status: true, donation_title: "", donation_discription: "", student_age: "", donation_deadline: "", time_of_creation: new Date() })
+    const [input, setInput] = useState({current_amount:0, media_images: [], goal_amount: "", donation_active_status: true, donation_title: "", donation_discription: "", student_age: "", donation_deadline: "", time_of_creation: new Date() })
     const [lastPage, setLastPage] = useState(false);
     const navigate = useNavigate()
     const accessToken = localStorage.getItem("accessToken")
-    const config =  {headers:{Authorization:`Bearer ${accessToken}`}}
+    const config = { headers: { Authorization: `Bearer ${accessToken}` } }
     async function postProject(e) {
         e.preventDefault();
         console.log(input);
-        const request = await axios.post("https://shikshasahayak.onrender.com/project/update",input,config)
-        .then((res) => {
-            toast({
-                title: `Submit ${res.data.status}`,
-                status: 'info',
-                duration: 3000,
-                isClosable: true,
-              })
-        })
-        .catch(err => {
-            toast({
-                title: `Internal Error Occurred`,
-                status: 'warning',
-                duration: 3000,
-                isClosable: true,
-              })
-            console.log(err);
-        })
-        setTimeout(()=>{
+        const request = await axios.post("https://shikshasahayak.onrender.com/project/update", input, config)
+            .then((res) => {
+                toast({
+                    title: `Submit ${res.data.status}`,
+                    status: 'info',
+                    duration: 3000,
+                    isClosable: true,
+                })
+            })
+            .catch(err => {
+                toast({
+                    title: `Internal Error Occurred`,
+                    status: 'warning',
+                    duration: 3000,
+                    isClosable: true,
+                })
+                console.log(err);
+            })
+        setTimeout(() => {
             navigate("/home")
-        },2000)
-        
+        }, 2000)
+
     }
 
     return (
         <div style={{ minHeight: "500px", minWidth: "300px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <div style={{ width:"80%",margin: "50px" }} >
-                <h2 style={{textAlign:"center", marginBottom: "40px" }}>Setup fundraiser</h2>
+            <div style={{ width: "80%", margin: "50px" }} >
+                <h2 style={{ textAlign: "center", marginBottom: "40px" }}>Setup fundraiser</h2>
                 <form style={{ width: "100%" }} onSubmit={postProject} >
-                    <VStack spacing={4}  style={{ width: "100%"}}>
-                        {!lastPage && <div style={{ width:  "60%", minWidth:"300px"}}><FormControl id="goal_amount" isRequired>
+                    <VStack spacing={4} style={{ width: "100%" }}>
+                        {!lastPage && <div style={{ width: "60%", minWidth: "300px" }}><FormControl id="goal_amount" isRequired>
                             <FormLabel>Estimated Cost</FormLabel>
                             <Input
                                 type="number"
@@ -75,7 +75,7 @@ export function FundRaise() {
                   required
                 />
               </FormControl> */}
-                        {lastPage && <div style={{ width: "100%"}}>
+                        {lastPage && <div style={{ width: "100%" }}>
                             <FormControl id="donation_title" isRequired>
                                 <Input
                                     type="text"
@@ -88,7 +88,7 @@ export function FundRaise() {
                             </FormControl>
                             <FormControl id="donation_discription" mt="4" isRequired>
                                 <textarea
-                                    style={{padding:"15px", width:"100%",minHeight: "500px", minWidth: "320px", border: "1px solid lightgrey" }}
+                                    style={{ padding: "15px", width: "100%", minHeight: "500px", minWidth: "320px", border: "1px solid lightgrey" }}
                                     name="donation_discription"
                                     type="text"
                                     placeholder="Write your story. Keep it simple, personal, and about the specific use of funds"
@@ -109,10 +109,10 @@ export function FundRaise() {
                             </FormControl>
 
                         </div>}
-                        {!lastPage && <Button backgroundColor="#f68631" color="white" onClick={() => { 
-                            
+                        {!lastPage && <Button backgroundColor="#f68631" color="white" onClick={() => {
+
                             setLastPage(true)
-                            }} >Next</Button>}
+                        }} >Next</Button>}
                         {lastPage && <Button backgroundColor="#f68631" color="white" type="submit" >Submit</Button>}
                     </VStack>
                 </form>

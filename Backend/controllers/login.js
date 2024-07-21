@@ -21,7 +21,7 @@ export const register = async (req, res) => {
         }
         const userExist = await Customer.findOne({ student_email });
         if (!userExist) {
-            const data = new Customer({ student_name, student_email, student_password });
+            const data = new Customer({ student_name, student_email, student_password,  total_amout:0});
             await data.save();
             res.status(201).json({ msg: "Register successful", data });
         } else {
