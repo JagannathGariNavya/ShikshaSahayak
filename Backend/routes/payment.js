@@ -33,8 +33,8 @@ router.post('/order', async (req, res) => {
 
 
 router.post('/verify', async (req, res) => {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, amount } = req.body;
-
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, amount, _id } = req.body;
+    req.user = {...req.user, donatee_id:_id};
     try {
         console.log('Incoming verification data:', req.body); // Log incoming data
 
