@@ -81,19 +81,19 @@ frontend/
 
 -1. User Authentication
 Secure Registration and Login: Implements encryption with bcrypt and JWT for secure user authentication.
-2. AI-Powered Chatbot
+-2. AI-Powered Chatbot
 Interactive Assistance: Provides real-time support and answers to user queries through an AI-powered chatbot.
-3. Responsive Design
+-3. Responsive Design
 Seamless Experience: Ensures the platform is fully functional and visually appealing across all devices and screen sizes.
-4. User Profile Management
+-4. User Profile Management
 Profile Creation and Management: Allows users to create, view, and update their profiles with personal information and project details.
-5. CRUD Operations
+-5. CRUD Operations
 Admin Controls: Enables administrators to perform Create, Read, Update, and Delete operations on user data and project information.
-6. OTP Verification
+-6. OTP Verification
 Password Recovery: Uses One-Time Password (OTP) for secure password resets and verifications.
-7. Payment Integration
+-7. Payment Integration
 Seamless Donations: Integrates payment gateways to allow users to donate funds directly from their cards.
-8. Self-Fundraising Option
+-8. Self-Fundraising Option
 Student Fundraising: Provides students with tools to set up and manage their own fundraising campaigns.
 
 ## API Endpoints
