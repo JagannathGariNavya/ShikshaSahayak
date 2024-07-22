@@ -24,7 +24,7 @@ app.use("/user",protect, userData);
 app.use("/project",protect, postProject)
 app.use('/api', Otprouter);
 app.use('/api',loginrouter);
-app.use('/api/payment', paymentRoutes);
+app.use('/api/payment',protect, paymentRoutes);
 app.use('/api/donations', donationRoutes); // Add the donations route
 import "./utils/geminiApi.js"
 app.use("/apie",router);
