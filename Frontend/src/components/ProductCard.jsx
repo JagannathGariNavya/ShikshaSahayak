@@ -1,10 +1,11 @@
 import { Button, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function ProductCard() {
     const [amount, setAmount] = useState("");
-   
+    const navigate = useNavigate()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const project = JSON.parse(localStorage.getItem('selectedProject'));
     const accessToken = localStorage.getItem('accessToken');
@@ -55,6 +56,8 @@ export default function ProductCard() {
             if (!res.ok) throw new Error('Network response was not ok.');
             const data = await res.json();
             handlePaymentVerify(data.data);
+            onClose();
+            
         } catch (error) {
             console.log(error);
         }
@@ -89,6 +92,7 @@ export default function ProductCard() {
                     const verifyData = await res.json();
                     if (verifyData.message) {
                         toast.success(verifyData.message);
+                        navigate("/home");
                         // Refresh donation info
                         const updatedRes = await fetch('https://shikshasahayak.onrender.com/api/donations/'); // Direct path
                         if (!updatedRes.ok) throw new Error('Network response was not ok.');
