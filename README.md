@@ -130,3 +130,17 @@ Student Fundraising: Provides students with tools to set up and manage their own
 - Node.js with Express for RESTful API services.
 - MongoDB for flexible data storage.
 - JWT for secure user authentication.
+- 
+![image](https://github.com/user-attachments/assets/9dcd27c1-676f-4491-8ca4-a3a4abf53d74)
+![image](https://github.com/user-attachments/assets/a9a637a1-f86c-40ee-9636-f7eeca06e657)
+![image](https://github.com/user-attachments/assets/51ad861f-4a4f-4619-8c1a-21282e5d2dca)
+![image](https://github.com/user-attachments/assets/ef69dcb1-1fd2-46eb-84f1-58ca8a966bb4)
+![image](https://github.com/user-attachments/assets/29d0f55e-a76b-428a-9360-c39a08ff65c6)
+![image](https://github.com/user-attachments/assets/b9812e07-0a63-41c8-aa6c-c9464e2f95f4)
+![image](https://github.com/user-attachments/assets/6d6ad57e-212f-4048-8deb-399c1f1e1c75)
+![image](https://github.com/user-attachments/assets/74bdaed4-00bd-4cf4-b796-6d8a5187cb5a)
+![image](https://github.com/user-attachments/assets/8576446b-e22c-4c8d-b724-abf4f5cf081e)
+![image](https://github.com/user-attachments/assets/dcdb5458-c41c-4fb5-a8b4-1e1670c734cb)
+![image](https://github.com/user-attachments/assets/d9a03952-988f-43ee-9c92-62188cd23c11)
+
+
