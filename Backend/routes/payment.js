@@ -2,8 +2,8 @@ import express from 'express';
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
 import 'dotenv/config';
-import Customer from "../Models/Loginmodel.js"
-
+import Customer from "../Models/Loginmodel.js";
+import mongoose from 'mongoose';
 const router = express.Router();
 
 const razorpayInstance = new Razorpay({
@@ -13,32 +13,30 @@ const razorpayInstance = new Razorpay({
 
 // ROUTE: Create Payment Order
 router.post('/order', async (req, res) => {
-    const { amount,  _id } = req.body;
-    req.user = {...req.user, donatee_id:_id};
+    const { amount, _id } = req.body;
+    req.user = { ...req.user, donatee_id: _id };
     try {
         const options = {
             amount: amount * 100,
             currency: "INR",
-            receipt: `receipt_${Date.now()}`,
-            payment_capture: '1' 
+            receipt: `receipt ${Date.now()}`,
+            payment_capture: '1'
         };
 
         const order = await razorpayInstance.orders.create(options);
         res.json({ data: order });
     } catch (error) {
         res.status(500).json({ message: "Error creating payment order" });
-        console.log(error);
+        console.log('Error creating order:', error);
     }
 });
 
-
 router.post('/verify', async (req, res) => {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature, amount, _id } = req.body;
-    req.user = {...req.user, donatee_id:_id};
-    try {
-        console.log('Incoming verification data:', req.body); // Log incoming data
+    req.user = { ...req.user, donatee_id: String(_id) };
 
-        const sign = razorpay_order_id + "|" + razorpay_payment_id;
+    try {
+        const sign = `${razorpay_order_id}|${razorpay_payment_id}`;
         const expectedSign = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET)
             .update(sign.toString())
             .digest("hex");
@@ -47,38 +45,64 @@ router.post('/verify', async (req, res) => {
 
         if (isAuthentic) {
             let donation;
-            if(req.user.donatee_id.length == 24) donation = await Customer.find({'_id': mongoose.Types.ObjectId(req.user.donatee_id)});
-            else donation = await Customer.find({'_id':Number(req.user.donatee_id)});
+            console.log("Donatee id", req.user.donatee_id, req.user.donatee_id.length);
+
+            if (req.user.donatee_id.length === 24) {
+                donation = await Customer.findById(req.user.donatee_id).exec();
+            } else {
+                donation = await Customer.findOne({ '_id': Number(req.user.donatee_id) }).exec();
+            }
+
             if (donation) {
-                console.log('Donation updated successfully:', donation); // Log successful update
+                console.log('Donation updated successfully:');
                 let data;
-                if(req.user.donatee_id.length == 24)data = await Customer.aggregate([{$match:{'_id':new mongoose.Types.ObjectId(req.user.donatee_id.length)}},{$project:{"student_password":0, "student_email":0}}]);
-                else data = await Customer.aggregate([{$match:{'_id':Number(req.user.donatee_id.length)}},{$project:{"student_password":0, "student_email":0}}]);
-                
-                data = data[0];
+
+                if (req.user.donatee_id.length === 24) {
+                    data = await Customer.findById(req.user.donatee_id, { student_password: 0, student_email: 0 }).exec();
+                } else {
+                    data = await Customer.findOne({ '_id': Number(req.user.donatee_id) }, { student_password: 0, student_email: 0 }).exec();
+                }
 
                 let user_name;
-                if(req.user.id.length == 24)user_name = await Customer.aggregate([{$match:{'_id':new mongoose.Types.ObjectId(req.user.id)}},{$project:{"student_name":1}}]);
-                else user_name = await Customer.aggregate([{$match:{'_id':Number(req.user.id)}},{$project:{"student_name":1}}]);
 
-                user_name = user_name[0];
+                if (req.user.id.length === 24) {
+                    user_name = await Customer.findById(req.user.id, { student_name: 1 }).exec();
+                } else {
+                    user_name = await Customer.findOne({ '_id': Number(req.user.id) }, { student_name: 1 }).exec();
+                }
 
-                if(req.user.donatee_id.length == 24) await Customer.updateOne({'_id':new mongoose.Types.ObjectId(req.user.donatee_id)},{$set:{total_amount:data.total_amount+amount, current_amount:data.current_amount+amount, current_donators:[...data.current_donators,{_id:data.current_donators.length+1,donator_id:res.user.id,name:user_name.student_name,amount:amount}]}});
-                else  await Customer.updateOne({'_id':Number(req.user.donatee_id)},{$set:{total_amount:data.total_amount+amount, current_amount:data.current_amount+amount, current_donators:[...data.current_donators,{_id:data.current_donators.length+1,donator_id:res.user.id,name:user_name.student_name,amount:amount}]}});
+                if (data && user_name) {
+                    await Customer.updateOne(
+                        { '_id': data._id },
+                        {
+                            $inc: { total_amount: amount, current_amount: amount },
+                            $push: {
+                                current_donators: {
+                                    _id: data.current_donators.length + 1,
+                                    donator_id: req.user.id,
+                                    name: user_name.student_name,
+                                    amount: amount
+                                }
+                            }
+                        }
+                    );
 
-                res.json({ message: "Payment Successfully" });
+                    res.json({ message: "Payment Successfully" });
+                } else {
+                    res.status(404).json({ message: "Data or User not found" });
+                }
             } else {
-                console.log('Donation not found for ID:', donation_id); // Log missing donation
+                console.log('Donation not found for ID:', req.user.donatee_id);
                 res.status(404).json({ message: "Donation not found" });
             }
         } else {
-            console.log('Invalid signature:', { expectedSign, receivedSignature: razorpay_signature }); // Log invalid signature
+            console.log('Invalid signature:', { expectedSign, receivedSignature: razorpay_signature });
             res.status(400).json({ message: "Invalid signature" });
         }
     } catch (error) {
-        console.error('Error during payment verification:', error); // Log caught errors
+        console.error('Error during payment verification:', error);
         res.status(500).json({ message: "Internal Server Error!" });
     }
 });
 
-export default router;
+export default router;

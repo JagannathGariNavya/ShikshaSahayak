@@ -7,6 +7,7 @@ export default function ProductCard() {
    
     const { isOpen, onOpen, onClose } = useDisclosure()
     const project = JSON.parse(localStorage.getItem('selectedProject'));
+    const accessToken = localStorage.getItem('accessToken');
     useEffect(() => {
         // Fetch donation information from your backend
         const fetchDonationInfo = async () => {
@@ -45,7 +46,8 @@ export default function ProductCard() {
             const res = await fetch('https://shikshasahayak.onrender.com/api/payment/order', { // Direct path
                 method: "POST",
                 headers: {
-                    "content-type": "application/json"
+                    "content-type": "application/json",
+                    "Authorization": `Bearer ${accessToken}`
                 },
                 body: JSON.stringify({ amount, _id:project._id })
             });
@@ -71,7 +73,8 @@ export default function ProductCard() {
                     const res = await fetch('https://shikshasahayak.onrender.com/api/payment/verify', { // Direct path
                         method: 'POST',
                         headers: {
-                            'content-type': 'application/json'
+                            'content-type': 'application/json',
+                             "Authorization": `Bearer ${accessToken}`
                         },
                         body: JSON.stringify({
                             razorpay_order_id: response.razorpay_order_id,
@@ -87,7 +90,7 @@ export default function ProductCard() {
                     if (verifyData.message) {
                         toast.success(verifyData.message);
                         // Refresh donation info
-                        const updatedRes = await fetch('http://localhost:4000/api/donations/'); // Direct path
+                        const updatedRes = await fetch('https://shikshasahayak.onrender.com/api/donations/'); // Direct path
                         if (!updatedRes.ok) throw new Error('Network response was not ok.');
                         const updatedData = await updatedRes.json();
                         if (updatedData.length > 0) {
