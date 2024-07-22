@@ -118,9 +118,9 @@ const DetailedProject = () => {
 
         </Box>
 
-        <Heading as="h3" size="lg" mb={4} color={orange}>
+        {/* <Heading as="h3" size="lg" mb={4} color={orange}>
           Updates on Donation:
-        </Heading>
+        </Heading> */}
         <List spacing={3} mb={6}>
           {project.updates_on_donation.map((update, index) => (
             <ListItem key={index} color={green} fontSize="md">{update}</ListItem>
@@ -128,9 +128,9 @@ const DetailedProject = () => {
         </List>
 
         {/* Carousel for Media Images */}
-        <Heading as="h3" size="lg" mb={4} color={orange}>
+        {/* <Heading as="h3" size="lg" mb={4} color={orange}>
           Media Images:
-        </Heading>
+        </Heading> */}
         <Carousel responsive={responsive} showDots={true} infinite={true} autoPlay={true}>
           {project.media_images.map((image, index) => (
             <Box key={index} p={2}>

@@ -633,7 +633,7 @@ export function NavBar({ isLoggedIn, setIsLoggedIn }) {
                       }}
                     />
                   </InputGroup>
-                  <Link as={RouterLink} to="/fundRaise">Start a fundraiser</Link>
+                  <Link as={RouterLink} to="/fundRaise" _hover={{ bg: "#e07b00" }}>Start a fundraiser</Link>
                   {!isLoggedIn ? (
                     <>
                       <Link as={RouterLink} to="/login" onClick={onClose}>Login</Link>

@@ -36,7 +36,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
         <Text fontSize="2xl" color="green.500">{successMessage}</Text>
       ) : (
         <>
-          <Text fontSize="2xl" color='orange'>Login</Text>
+          <Text fontSize="2xl" color='black'>Login</Text>
           <form onSubmit={handleSubmit}>
             <VStack spacing={4}>
               <FormControl id="email" isRequired>
@@ -49,7 +49,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
                   required
                 />
               </FormControl>
-              <FormControl id="password" mt="4" isRequired>
+              <FormControl id="password"  isRequired>
                 <FormLabel>Password</FormLabel>
                 <Input
                   type="password"
@@ -60,7 +60,9 @@ const LoginForm = ({ setIsLoggedIn }) => {
                 />
               </FormControl>
               {error && <Text color="red.500">{error}</Text>}
-              <Button type="submit" colorScheme="green">Login</Button>
+              <Button type="submit" colorScheme="green" bg="#F58634" 
+      color="white" 
+      w="100%" >Login</Button>
             </VStack>
           </form>
           <br />
