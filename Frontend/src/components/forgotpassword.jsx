@@ -91,17 +91,20 @@
 import React, { useState } from 'react';
 import axios from './api';
 import { PinInput, PinInputField, VStack, Button, useToast, Box, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPassword = () => {
-    const [email, setEmail] = useState('');
+    const navigate = useNavigate()
+    const [student_email, setEmail] = useState('');
     const [otp, setOtp] = useState('');
     const [isOtpSent, setIsOtpSent] = useState(false);
+    const [password, setNewPassword] = useState("");
     const toast = useToast();
 
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/send-otp', { email });
+            const response = await axios.post('/send-otp', { student_email });
             setIsOtpSent(true);
             toast({
                 title: 'OTP Sent',
@@ -127,7 +130,7 @@ const ForgotPassword = () => {
 
     const handleOtpComplete = async (value) => {
         try {
-            const response = await axios.post('/verify-otp', { email, otp: value });
+            const response = await axios.post('/verify-otp', { student_email, otp: value, password });
             toast({
                 title: 'Success',
                 description: response.data,
@@ -137,12 +140,12 @@ const ForgotPassword = () => {
             });
             localStorage.setItem('resetToken', response.data.token);
             // Redirect to change password page
-            window.location.href = '/change-password';
+            navigate("/login");
             // Redirect to reset password page or home page
         } catch (error) {
             toast({
                 title: 'Error',
-                description: error.response.data,
+                description: "Something went wrong :(",
                 status: 'error',
                 duration: 5000,
                 isClosable: true,
@@ -157,7 +160,7 @@ const ForgotPassword = () => {
                     <form onSubmit={handleEmailSubmit}>
                         <FormControl id="password" mt="4" isRequired>
                             <FormLabel>Email</FormLabel>
-                            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Enter Email' required /><br/>
+                            <Input type="email" value={student_email} onChange={(e) => setEmail(e.target.value)} placeholder='Enter Email' required /><br />
                             <Button type="submit" colorScheme="teal">
                                 Send OTP
                             </Button>
@@ -166,7 +169,7 @@ const ForgotPassword = () => {
 
                 ) : (
                     <>
-                        <PinInput value={otp} onChange={handleOtpChange} onComplete={handleOtpComplete}>
+                        <PinInput value={otp} onChange={handleOtpChange} >
                             <PinInputField />
                             <PinInputField />
                             <PinInputField />
@@ -174,6 +177,15 @@ const ForgotPassword = () => {
                             <PinInputField />
                             <PinInputField />
                         </PinInput>
+                        <Input
+                            type="password"
+                            placeholder="New Password"
+                            value={password}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            required
+                            flex="1"
+                            minW="200px"
+                        />
                         <Button onClick={() => handleOtpComplete(otp)} colorScheme="teal">
                             Verify OTP
                         </Button>

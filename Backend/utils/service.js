@@ -1,8 +1,7 @@
-import nodemailer from 'nodemailer';
-import 'dotenv/config';
-import Customer from '../Models/Loginmodel.js';
-import jwt from 'jsonwebtoken';
-
+import nodemailer from "nodemailer";
+import "dotenv/config";
+import Customer from "../Models/Loginmodel.js";
+import bcrypt from "bcrypt"
 // Temporary store for OTPs
 const otpStore = new Map();
 
@@ -12,7 +11,7 @@ const generateOTP = () => {
 
 export const emailSender = async (req, res) => {
   const { student_email } = req.body;
-  if (!student_email ) {
+  if (!student_email) {
     console.log("emailnot found");
     return res.status(400).send("Invalid request body. 'email' is required.");
   }
@@ -50,34 +49,30 @@ export const emailSender = async (req, res) => {
   }
 };
 
-export const verifyOTP = (req, res) => {
-  const {student_email, otp } = req.body;
+export const verifyOTP = async (req, res) => {
+  const { student_email, otp, password } = req.body;
 
   if (!student_email || !otp) {
-    return res.status(400).send("Invalid request body. 'email' and 'otp' are required.");
+    return res
+      .status(400)
+      .send("Invalid request body. 'email' and 'otp' are required.");
   }
 
   const storedOtp = otpStore.get(student_email);
   if (storedOtp === otp) {
     otpStore.delete(student_email); // OTP is valid, remove it from store
-    return res.status(200).send("OTP verified successfully.");
+    if (password) {
+      let data;
+      req.body.password = await bcrypt.hash(
+        password,
+        10
+      );
+        data = await Customer.updateOne({student_email},{ $set: { student_password:req.body.password } });
+        return res.status(200).send("OTP verified successfully.");
+    } else {
+      res.sendStatus(401);
+    }
   } else {
     return res.status(400).send("Invalid OTP.");
   }
 };
-
-export const changePassword = async (req, res) => {
-    const { token, newPassword } = req.body;
-  
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
-      // await Customer.
-      // await Customer.updateOne({ email: decoded.email }, { password: hashedPassword });
-  
-      return res.status(200).send('Password changed successfully');
-    } catch (error) {
-      console.error(error);
-      return res.status(400).send('Failed to change password');
-    }
-  };
