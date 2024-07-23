@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Crowdfunding Platform is a web-based solution designed to assist students at Masai School in Bangalore who face financial challenges in their education. This platform provides a space for students to create fundraising projects and allows donors to contribute to these causes, fostering educational equity and support within the student community.
+The ShikshaSahayak Platform is a web-based solution designed to assist students at Masai School in Bangalore who face financial challenges in their education. This platform provides a space for students to create fundraising projects and allows donors to contribute to these causes, fostering educational equity and support within the student community.
 ## Deplolyed App
 Frontend: https://shikshasahayak-l0px.onrender.com
 <br>
